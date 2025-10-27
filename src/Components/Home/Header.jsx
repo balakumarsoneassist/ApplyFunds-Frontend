@@ -349,7 +349,7 @@ export default function Header() {
 
         <div className="hidden lg:block">
           <NavLink
-            to="/login"
+            to="/our-partners"
             className="px-6 py-2 border-2 border-green-500 text-green-500 rounded-md hover:bg-green-500 hover:text-white transition"
           >
             Login
@@ -509,7 +509,7 @@ export default function Header() {
             Contact Us
           </NavLink>
           <NavLink
-            to="/login"
+            to="/our-partners"
             className="bg-green-500 text-white text-lg font-medium px-6 py-2 rounded-md text-center"
             onClick={() => setIsMenuOpen(false)}
           >
