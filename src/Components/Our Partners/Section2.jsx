@@ -2,16 +2,15 @@ import React, { useState, forwardRef } from "react";
 import axios from "axios";
 
 const Section2 = forwardRef(({ onSwitchToSignup }, ref) => {
-  const [role, setRole] = useState("partner"); // "partner" or "customer"
+  const [role, setRole] = useState("partner");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState(""); // Added password field
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  // Reset form fields and messages when role changes
   const handleRoleChange = (newRole) => {
     setRole(newRole);
     setEmail("");
-    setPassword(""); // Clear password on role switch
+    setPassword("");
     setMessage("");
   };
 
@@ -20,14 +19,19 @@ const Section2 = forwardRef(({ onSwitchToSignup }, ref) => {
     setMessage("");
 
     try {
-      const apiUrl = role === "partner" ? "/api/partners/login" : "/api/customers/login";
+      const apiUrl =
+        role === "partner"
+          ? "/api/partners/login"
+          : "/api/customers/login";
       const payload = { email, password };
       const response = await axios.post(apiUrl, payload);
       setMessage(`✅ ${response.data.message}`);
       console.log("Login success:", response.data);
     } catch (error) {
       console.error(error);
-      setMessage(`❌ ${error.response?.data?.message || "Invalid email or password"}`);
+      setMessage(
+        `❌ ${error.response?.data?.message || "Invalid email or password"}`
+      );
     }
   };
 
@@ -38,7 +42,7 @@ const Section2 = forwardRef(({ onSwitchToSignup }, ref) => {
     >
       <h2 className="text-3xl font-bold text-blue-900 mb-6">Login Portal</h2>
 
-      {/* Radio Buttons for role selection */}
+      {/* Role selection */}
       <div className="flex items-center justify-center gap-6 mb-6">
         <label className="flex items-center gap-2">
           <input
@@ -62,7 +66,7 @@ const Section2 = forwardRef(({ onSwitchToSignup }, ref) => {
         </label>
       </div>
 
-      {/* Login Card */}
+      {/* Login form */}
       <div className="bg-gray-100 p-8 rounded-lg shadow-md w-full max-w-md">
         <h3 className="text-xl font-semibold text-blue-800 mb-4">
           {role === "partner" ? "Partner Login" : "Customer Login"}
@@ -115,29 +119,19 @@ const Section2 = forwardRef(({ onSwitchToSignup }, ref) => {
           )}
         </form>
 
-        {/* Signup Link */}
+        {/* Switch to Signup */}
         <div className="text-center mt-4">
-          {role === "partner" ? (
-            <p>
-              Not a Partner yet?{" "}
-              <span
-                onClick={() => onSwitchToSignup("partner")}
-                className="text-blue-700 cursor-pointer underline"
-              >
-                Sign up here
-              </span>
-            </p>
-          ) : (
-            <p>
-              Not a Customer yet?{" "}
-              <span
-                onClick={() => onSwitchToSignup("customer")}
-                className="text-blue-700 cursor-pointer underline"
-              >
-                Sign up here
-              </span>
-            </p>
-          )}
+          <p>
+            {role === "partner"
+              ? "Not a Partner yet?"
+              : "Not a Customer yet?"}{" "}
+            <span
+              onClick={() => onSwitchToSignup(role)}
+              className="text-blue-700 cursor-pointer underline"
+            >
+              Sign up here
+            </span>
+          </p>
         </div>
       </div>
     </div>
